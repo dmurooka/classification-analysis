@@ -22,4 +22,4 @@ print(df.head())
 # Replaces the original DataFrame with the new one that excludes row where "Species" is not 0
 df = df[df["Species"] != 0]
 
-print(df.info)
+print(df.head)
