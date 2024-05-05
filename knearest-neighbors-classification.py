@@ -43,7 +43,7 @@ scaler.fit(X_train)
 X_train = scaler.transform(X_train)
 X_test = scaler.transform(X_test)
 
-print(X_train[:5])
+# print(X_train[:5])
 
 # Train a model
 k = 1
@@ -52,3 +52,14 @@ classifier = KNeighborsClassifier(n_neighbors=k)
 classifier.fit(X_train, Y_train)
 
 y_pred = classifier.predict(X_test)
+
+result = confusion_matrix(y_test, y_pred)
+print(result)
+
+result1 = classification_report(y_test, y_pred)
+print(result1)
+
+result2 = accuracy_score(y_test, y_pred)
+print("Accuracy:", result2)
+
+# Best K
