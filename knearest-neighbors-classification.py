@@ -34,7 +34,7 @@ sns.relplot(data=df, x="Sepal length", y="Sepal width", hue="Species")
 X = df[df.columns[:2]]
 y = df[df.columns[-1]]
 
-X_train, X_test, Y_train, y_test = train_test_split(X, y, test_size=0.5)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5)
 print(X_train[:5])
 
 # Scaling
@@ -49,7 +49,7 @@ X_test = scaler.transform(X_test)
 k = 1
 
 classifier = KNeighborsClassifier(n_neighbors=k)
-classifier.fit(X_train, Y_train)
+classifier.fit(X_train, y_train)
 
 y_pred = classifier.predict(X_test)
 
@@ -62,4 +62,23 @@ print(result1)
 result2 = accuracy_score(y_test, y_pred)
 print("Accuracy:", result2)
 
+
 # Best K
+def knn_tuning(k):
+    classifier = KNeighborsClassifier(n_neighbors=k)
+    classifier.fit(X_train, y_train)
+    y_pred = classifier.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    return accuracy
+
+
+print(knn_tuning(2))
+print(knn_tuning(7))
+
+knn_results = pd.DataFrame({"K": np.arange(1, len(X_train), 5)})
+
+print(knn_results["K"])
+
+knn_results["Accuracy"] = knn_results["K"].apply(knn_tuning)
+
+print(knn_results)
