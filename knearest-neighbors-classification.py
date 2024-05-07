@@ -82,3 +82,25 @@ print(knn_results["K"])
 knn_results["Accuracy"] = knn_results["K"].apply(knn_tuning)
 
 print(knn_results)
+
+
+# Optimize weights
+def knn_tuning_uniform(k):
+    classifier = KNeighborsClassifier(n_neighbors=k, weights="uniform")
+    classifier.fit(X_train, y_train)
+    y_pred = classifier.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    return accuracy
+
+
+def knn_tuning_distance(k):
+    classifier = KNeighborsClassifier(n_neighbors=k, weights="distance")
+    classifier.fit(X_train, y_train)
+    y_pred = classifier.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    return accuracy
+
+
+knn_results["Uniform"] = knn_results["K"].apply(knn_tuning_uniform)
+knn_results["Distance"] = knn_results["K"].apply(knn_tuning_distance)
+print(knn_results)
